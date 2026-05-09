@@ -1,5 +1,7 @@
 import { create } from 'zustand';
 
+const API_URL = 'https://spendsense-yshv.onrender.com';
+
 export const useStore = create((set, get) => ({
   transactions: [],
   loading: false,
@@ -22,7 +24,7 @@ export const useStore = create((set, get) => ({
   fetchTransactions: async () => {
     set({ loading: true, error: null });
     try {
-      const response = await fetch('http://localhost:3000/transactions');
+      const response = await fetch(`${API_URL}/transactions`);
       if (!response.ok) throw new Error('Failed to fetch');
       const data = await response.json();
       set({ transactions: data, loading: false });
@@ -34,7 +36,7 @@ export const useStore = create((set, get) => ({
 
   addTransaction: async (transactionData) => {
     try {
-      const response = await fetch('http://localhost:3000/transactions', {
+      const response = await fetch(`${API_URL}/transactions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +63,7 @@ export const useStore = create((set, get) => ({
 
   parseMessage: async (text) => {
     try {
-      const response = await fetch('http://localhost:3000/parse-message', {
+      const response = await fetch(`${API_URL}/parse-message`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
